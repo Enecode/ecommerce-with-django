@@ -1,4 +1,5 @@
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.db import models
 
 
@@ -8,7 +9,8 @@ class Tag(models.Model):
 
 
 class TaggedItem(models.Model):
-    tag = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
-    content_object = models.GenericForeignKey()
+    content_object = GenericForeignKey()
 
