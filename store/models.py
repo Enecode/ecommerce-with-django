@@ -8,6 +8,7 @@ class Promotion(models.Model):
 
 class Collection(models.Model):
     title = models.CharField(max_length=255)
+    featured_product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, related_name='+')
 
 
 class Product(models.Model):
@@ -15,9 +16,10 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     inventory = models.IntegerField()
-    last_update = models.DecimalField(auto_now=True)
+    last_update = models.DecimalField(max_digits=6, decimal_places=2, auto_created=True)
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
     promotion = models.ManyToManyField(Promotion, related_name='products')
+
 
 class Customer(models.Model):
     MEMBERSHIP_STATUS_BRONZE = 'B'
